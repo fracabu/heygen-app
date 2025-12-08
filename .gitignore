@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+*.mp4
+foto_casa_vacanze/
+foto_casa_vacanze_fixed/
