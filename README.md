@@ -1,124 +1,115 @@
-# HeyGen Video Generator
+<h1 align="center">HeyGen App</h1>
+<h3 align="center">AI Avatar Video Generator</h3>
 
-Python toolkit for creating AI avatar videos using the [HeyGen API](https://docs.heygen.com/).
+<p align="center">
+  <em>Python toolkit for creating AI videos with HeyGen API</em>
+</p>
 
-## Features
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python" />
+  <img src="https://img.shields.io/badge/HeyGen-API-FF6B35?style=flat-square" alt="HeyGen" />
+  <img src="https://img.shields.io/badge/AI-Avatar-blueviolet?style=flat-square" alt="AI Avatar" />
+</p>
 
-- **List Resources** - Browse available avatars and voices
-- **Single Scene Videos** - Quick video generation with one avatar
-- **Multi-Scene Videos** - Create videos with multiple scenes and backgrounds
-- **Image Backgrounds** - Upload custom images as video backgrounds
-- **Asset Management** - Upload, list, and delete media assets
-- **Credit Tracking** - Monitor API credit usage
+<p align="center">
+  :gb: <a href="#english">English</a> | :it: <a href="#italiano">Italiano</a>
+</p>
 
-## Quick Start
+---
 
-### 1. Install dependencies
+<a name="english"></a>
+## :gb: English
 
-```bash
-pip install -r requirements.txt
-```
+### Overview
 
-### 2. Configure API key
+Python toolkit for creating AI avatar videos using the HeyGen API. Generate single or multi-scene videos with custom backgrounds and professional avatars.
 
-Get your API key from [HeyGen App Settings](https://app.heygen.com/settings) > API tab.
+### Features
 
-Create a `.env` file:
+- **List Resources** - Browse avatars and voices
+- **Single Scene Videos** - Quick generation with one avatar
+- **Multi-Scene Videos** - Multiple scenes and backgrounds
+- **Image Backgrounds** - Upload custom images
+- **Asset Management** - Upload, list, delete media
+- **Credit Tracking** - Monitor API usage
 
-```env
-HEYGEN_API_KEY=your_api_key_here
-```
-
-### 3. Explore available resources (free)
-
-```bash
-python 01_list_avatars_voices.py
-```
-
-### 4. Create your first video
-
-```bash
-python 02_create_simple_video.py
-```
-
-## Scripts
+### Scripts
 
 | Script | Description | Credits |
 |--------|-------------|---------|
-| `01_list_avatars_voices.py` | List available avatars, voices, and check quota | Free |
-| `02_create_simple_video.py` | Create a simple single-scene video | ~0.5-1 |
-| `03_multi_scene_video.py` | Create video with multiple scenes | ~1-2 |
-| `04_video_casa_vacanze.py` | Full workflow: upload images + multi-scene video | ~2-3 |
+| `01_list_avatars_voices.py` | List resources | Free |
+| `02_create_simple_video.py` | Single scene video | ~0.5-1 |
+| `03_multi_scene_video.py` | Multi-scene video | ~1-2 |
+| `04_video_casa_vacanze.py` | Full workflow | ~2-3 |
 
-## Utilities
+### Quick Start
 
-| File | Purpose |
-|------|---------|
-| `config.py` | API configuration and headers |
-| `utils_crediti.py` | Check remaining API credits |
-| `utils_assets.py` | Upload, list, and delete assets |
+```bash
+git clone https://github.com/fracabu/heygen-app.git
+cd heygen-app
+pip install -r requirements.txt
 
-## API Usage Pattern
+# Create .env
+HEYGEN_API_KEY=your_key
 
-```python
-from config import BASE_URL, get_headers
-import requests
-
-# 1. Create video
-payload = {
-    "video_inputs": [{
-        "character": {"type": "avatar", "avatar_id": "...", "avatar_style": "normal"},
-        "voice": {"type": "text", "input_text": "Hello!", "voice_id": "..."},
-        "background": {"type": "color", "value": "#FAFAFA"}
-    }],
-    "dimension": {"width": 1280, "height": 720}
-}
-
-response = requests.post(f"{BASE_URL}/v2/video/generate", headers=get_headers(), json=payload)
-video_id = response.json()["data"]["video_id"]
-
-# 2. Poll for completion
-while True:
-    status = requests.get(f"{BASE_URL}/v1/video_status.get", headers=get_headers(), params={"video_id": video_id})
-    if status.json()["data"]["status"] == "completed":
-        print(status.json()["data"]["video_url"])
-        break
+python 01_list_avatars_voices.py
 ```
 
-## Background Types
+---
 
-```python
-# Solid color
-{"type": "color", "value": "#1a1a2e"}
+<a name="italiano"></a>
+## :it: Italiano
 
-# Image (upload first via utils_assets.py)
-{"type": "image", "image_asset_id": "asset_id_here"}
+### Panoramica
 
-# Video background
-{"type": "video", "video_asset_id": "...", "play_style": "loop"}
+Toolkit Python per creare video con avatar AI usando le API HeyGen. Genera video singola o multi-scena con sfondi personalizzati e avatar professionali.
+
+### Funzionalita
+
+- **Lista Risorse** - Sfoglia avatar e voci
+- **Video Singola Scena** - Generazione rapida con un avatar
+- **Video Multi-Scena** - Multiple scene e sfondi
+- **Sfondi Immagine** - Carica immagini personalizzate
+- **Gestione Asset** - Upload, lista, elimina media
+- **Tracking Crediti** - Monitora uso API
+
+### Script
+
+| Script | Descrizione | Crediti |
+|--------|-------------|---------|
+| `01_list_avatars_voices.py` | Lista risorse | Gratis |
+| `02_create_simple_video.py` | Video singola scena | ~0.5-1 |
+| `03_multi_scene_video.py` | Video multi-scena | ~1-2 |
+| `04_video_casa_vacanze.py` | Workflow completo | ~2-3 |
+
+### Avvio Rapido
+
+```bash
+git clone https://github.com/fracabu/heygen-app.git
+cd heygen-app
+pip install -r requirements.txt
+
+# Crea .env
+HEYGEN_API_KEY=tua_chiave
+
+python 01_list_avatars_voices.py
 ```
 
-## Credit Costs
+---
 
-| Avatar Type | Cost |
-|-------------|------|
-| Photo Avatar | 1 credit/min |
-| Video Avatar | 2 credits/min |
-| Avatar IV | 6 credits/min |
+## Requirements
 
-## Limits
-
-- Max 5000 characters per text input
-- Max 50 scenes per video
-- Video URLs expire after 7 days
-- Dimensions: 128-4096 px
-
-## Resources
-
-- [HeyGen API Docs](https://docs.heygen.com/)
-- [API Reference](https://docs.heygen.com/reference)
+- Python 3.8+
+- HeyGen API Key
 
 ## License
 
 MIT
 
+---
+
+<p align="center">
+  <a href="https://github.com/fracabu">
+    <img src="https://img.shields.io/badge/Made_by-fracabu-8B5CF6?style=flat-square" alt="Made by fracabu" />
+  </a>
+</p>
